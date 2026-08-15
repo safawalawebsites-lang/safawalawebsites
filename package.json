@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "mkdir -p public && cp index.html public/index.html && cp -R assets public/assets"
+    "build": "mkdir -p public/assets && cp index.html public/index.html && cp -R assets/. public/assets"
   }
 }
