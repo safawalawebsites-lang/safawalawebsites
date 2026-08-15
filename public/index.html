@@ -1,0 +1,924 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Safawala Rishikesh Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: #f7f0e6;
+        color: #1f140f;
+        font-family: "Jost", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      a { color: inherit; text-decoration: none; }
+      .page { padding: 18px; }
+      .panel {
+        max-width: 1180px;
+        margin: 0 auto 28px;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .dark { background: #070b0b; color: white; box-shadow: 0 24px 70px rgba(38, 18, 12, .22); }
+      .ivory { background: #faf6ef; box-shadow: 0 18px 50px rgba(84, 57, 32, .08); }
+      .maroon { background: #3a1112; color: white; box-shadow: 0 24px 70px rgba(38, 18, 12, .18); }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 22px 34px;
+        position: relative;
+        z-index: 4;
+      }
+      .brand { font-size: 18px; font-weight: 500; }
+      .brand-logo { display: block; width: 180px; height: auto; }
+      .links { display: flex; align-items: center; gap: 30px; font-size: 11px; font-weight: 500; opacity: .82; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 0 18px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .btn-maroon { background: #7a2430; color: white; }
+      .btn-gold { background: #c99b54; color: #21120b; }
+      .btn-outline { border: 1px solid rgba(255,255,255,.32); color: white; }
+      .btn-cream { border: 1px solid #d9c8ad; color: #241711; }
+      #home.safawala-home {
+        max-width: 1440px;
+        margin-top: 0;
+        border-radius: 0;
+        background: #fdf9f2;
+        color: #181818;
+        box-shadow: none;
+      }
+      .announcement-bar {
+        min-height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #7d5b4e;
+        color: #fff;
+        font-size: 17px;
+        font-weight: 500;
+        letter-spacing: .01em;
+        line-height: 1.2;
+        text-align: center;
+      }
+      #home.safawala-home .nav {
+        height: 104px;
+        padding: 20px 30px;
+        background: #fdf9f2;
+        color: #181818;
+        border-bottom: 1px solid rgba(24,24,24,.06);
+      }
+      #home.safawala-home .links {
+        gap: 34px;
+        font-size: 17px;
+        font-weight: 400;
+        opacity: 1;
+      }
+      .nav-tools {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        color: #181818;
+        font-size: 15px;
+      }
+      .icon-btn {
+        width: 38px;
+        height: 38px;
+        border: 1px solid #eadfce;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: white;
+      }
+      .safawala-slider {
+        position: relative;
+        min-height: 720px;
+        overflow: hidden;
+        background: #15100d;
+      }
+      .hero-slides {
+        position: absolute;
+        inset: 0;
+      }
+      .hero-slide {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        background-position: center;
+        background-size: cover;
+        animation: safawalaHeroFade 30s infinite;
+        transform: scale(1.04);
+      }
+      .hero-slide:nth-child(1) { background-image: url("https://safawala.com/wp-content/uploads/2026/07/Alia-Ranbir-Image.png"); animation-delay: 0s; }
+      .hero-slide:nth-child(2) { background-image: url("https://safawala.com/wp-content/uploads/2026/07/Rakul-Image.png"); animation-delay: 5s; }
+      .hero-slide:nth-child(3) { background-image: url("https://safawala.com/wp-content/uploads/2026/07/Darshan-Image.png"); animation-delay: 10s; }
+      .hero-slide:nth-child(4) { background-image: url("https://safawala.com/wp-content/uploads/2026/07/Virat-Image-1.png"); animation-delay: 15s; }
+      .hero-slide:nth-child(5) { background-image: url("https://safawala.com/wp-content/uploads/2025/08/Untitled-design-48.png"); animation-delay: 20s; }
+      .hero-slide:nth-child(6) { background-image: url("https://safawala.com/wp-content/uploads/2026/07/Vicky-Image.png"); animation-delay: 25s; }
+      @keyframes safawalaHeroFade {
+        0%, 13% { opacity: 1; transform: scale(1.01); }
+        18%, 95% { opacity: 0; transform: scale(1.06); }
+        100% { opacity: 0; transform: scale(1.06); }
+      }
+      .safawala-slider::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgba(0,0,0,.58) 0%, rgba(0,0,0,.24) 40%, rgba(0,0,0,.08) 100%),
+          linear-gradient(0deg, rgba(0,0,0,.4), transparent 38%);
+      }
+      .safawala-copy {
+        position: relative;
+        z-index: 2;
+        min-height: 720px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 620px;
+        padding: 70px 58px 80px 86px;
+        color: white;
+      }
+      .safawala-copy h1 {
+        max-width: 580px;
+        margin: 0;
+        font-size: 60px;
+        line-height: 1.07;
+        font-weight: 500;
+        letter-spacing: -.04em;
+      }
+      .safawala-copy p {
+        max-width: 520px;
+        margin: 20px 0 0;
+        color: rgba(255,255,255,.86);
+        font-size: 18px;
+        line-height: 1.65;
+      }
+      .safawala-copy .btn {
+        width: fit-content;
+        margin-top: 30px;
+        min-height: 44px;
+        border-radius: 0;
+        background: #b8965b;
+        color: white;
+        font-size: 13px;
+        font-weight: 400;
+        padding: 0 28px;
+      }
+      .safawala-dots {
+        position: absolute;
+        z-index: 3;
+        left: 86px;
+        bottom: 36px;
+        display: flex;
+        gap: 10px;
+      }
+      .safawala-dots span {
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        border: 1px solid white;
+        background: transparent;
+      }
+      .safawala-dots span:first-child { background: white; }
+      .safawala-badges {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        background: #fdf9f2;
+        border-bottom: 1px solid #eee3d5;
+      }
+      .safawala-badge {
+        min-height: 96px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        border-right: 1px solid #eee3d5;
+        color: #1f140f;
+        font-size: 15px;
+        font-weight: 400;
+      }
+      .safawala-badge:last-child { border-right: 0; }
+      .safawala-badge strong {
+        color: #b8965b;
+        font-size: 25px;
+        line-height: 1;
+      }
+      .hero-dark {
+        position: relative;
+        min-height: 560px;
+        display: grid;
+        grid-template-columns: 1.02fr .98fr;
+        align-items: center;
+        gap: 38px;
+        padding: 38px 52px 42px;
+      }
+      .hero-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 78% 22%, rgba(201,155,84,.2), transparent 28%),
+          radial-gradient(circle at 16% 76%, rgba(122,36,48,.34), transparent 32%),
+          linear-gradient(115deg, #070b0b 0%, #10100e 46%, #371012 100%);
+      }
+      .hero-bg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: .16;
+        background-image:
+          linear-gradient(30deg, transparent 48%, rgba(255,255,255,.18) 49%, transparent 50%),
+          linear-gradient(150deg, transparent 48%, rgba(201,155,84,.16) 49%, transparent 50%);
+        background-size: 54px 54px;
+        mask-image: linear-gradient(90deg, #000 0%, transparent 80%);
+      }
+      .hero-copy { position: relative; z-index: 2; }
+      .eyebrow {
+        margin: 0;
+        color: #c99b54;
+        text-transform: uppercase;
+        letter-spacing: .28em;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      h1, h2, h3 {
+        font-family: "Jost", ui-sans-serif, system-ui, sans-serif;
+        font-weight: 400;
+        letter-spacing: -.03em;
+      }
+      h1 { max-width: 620px; margin: 20px 0 0; font-size: 66px; line-height: .92; }
+      h1 span, .gold { color: #c99b54; }
+      .lead { max-width: 500px; margin: 24px 0 0; font-size: 15px; line-height: 1.9; color: rgba(255,255,255,.76); }
+      .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+      .hero-points {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 26px;
+      }
+      .hero-points span {
+        border: 1px solid rgba(201,155,84,.28);
+        background: rgba(255,255,255,.05);
+        border-radius: 999px;
+        color: rgba(255,255,255,.78);
+        font-size: 11px;
+        font-weight: 700;
+        padding: 9px 13px;
+      }
+      .hero-visual {
+        position: relative;
+        z-index: 2;
+        min-height: 450px;
+        display: grid;
+        place-items: center;
+      }
+      .hero-visual::before {
+        content: "";
+        position: absolute;
+        width: 430px;
+        height: 430px;
+        border-radius: 999px;
+        background: linear-gradient(145deg, rgba(201,155,84,.36), rgba(122,36,48,.12));
+        filter: blur(.2px);
+      }
+      .safa-showcase {
+        position: relative;
+        width: min(420px, 100%);
+        border-radius: 22px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,.16);
+        background: rgba(255,255,255,.06);
+        box-shadow: 0 34px 80px rgba(0,0,0,.42);
+      }
+      .safa-showcase img {
+        display: block;
+        width: 100%;
+        height: 480px;
+        object-fit: cover;
+      }
+      .safa-showcase::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 48%, rgba(7,11,11,.72) 100%);
+      }
+      .safa-caption {
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        bottom: 22px;
+        z-index: 2;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .safa-caption strong {
+        display: block;
+        font-family: "Jost", ui-sans-serif, system-ui, sans-serif;
+        color: #fff;
+        font-size: 28px;
+        font-weight: 500;
+      }
+      .safa-caption span { color: rgba(255,255,255,.7); font-size: 12px; line-height: 1.6; }
+      .craft-badge {
+        position: absolute;
+        z-index: 3;
+        left: -38px;
+        top: 48px;
+        width: 140px;
+        height: 140px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        text-align: center;
+        background: #f7f0e6;
+        color: #3a1112;
+        border: 8px solid rgba(201,155,84,.22);
+        box-shadow: 0 22px 50px rgba(0,0,0,.26);
+        font-family: "Jost", ui-sans-serif, system-ui, sans-serif;
+        font-size: 23px;
+        line-height: 1;
+      }
+      .craft-badge small {
+        display: block;
+        margin-top: 6px;
+        font-family: "Jost", sans-serif;
+        font-size: 9px;
+        text-transform: uppercase;
+        letter-spacing: .16em;
+      }
+      .fabric-card {
+        position: absolute;
+        z-index: 3;
+        right: -18px;
+        bottom: 72px;
+        width: 188px;
+        padding: 16px;
+        border-radius: 16px;
+        background: rgba(20,14,12,.78);
+        border: 1px solid rgba(255,255,255,.16);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 18px 50px rgba(0,0,0,.28);
+      }
+      .fabric-card p { margin: 0 0 12px; font-size: 11px; color: rgba(255,255,255,.72); }
+      .swatches { display: flex; gap: 8px; }
+      .swatches i {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        border: 2px solid rgba(255,255,255,.35);
+      }
+      .swatches i:nth-child(1) { background: #ead0a0; }
+      .swatches i:nth-child(2) { background: #8d2433; }
+      .swatches i:nth-child(3) { background: #ede5d5; }
+      .swatches i:nth-child(4) { background: #bd7a28; }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid rgba(255,255,255,.11);
+        background: rgba(0,0,0,.2);
+        padding: 26px 34px;
+      }
+      .stat { text-align: center; border-right: 1px solid currentColor; border-color: rgba(255,255,255,.12); }
+      .stat:last-child { border-right: 0; }
+      .stat strong { display: block; color: #c99b54; font-family: "Jost", ui-sans-serif, system-ui, sans-serif; font-size: 31px; font-weight: 500; }
+      .stat span { display: block; margin-top: 4px; font-size: 11px; opacity: .72; }
+      .hero-light {
+        display: grid;
+        grid-template-columns: .95fr 1.05fr;
+        align-items: center;
+        min-height: 470px;
+        padding: 0 52px 48px;
+      }
+      .hero-light h2, .section-title { margin: 18px 0 0; font-size: 46px; line-height: 1.08; }
+      .dark-text { color: #1f140f; }
+      .muted { color: #6a5c52; line-height: 1.8; font-size: 14px; }
+      .safa-art {
+        position: relative;
+        min-height: 360px;
+      }
+      .safa-art::before {
+        content: "";
+        position: absolute;
+        right: 30px;
+        top: 10px;
+        width: 330px;
+        height: 330px;
+        border-radius: 999px;
+        background: #eadcc7;
+      }
+      .safa-art img {
+        position: relative;
+        display: block;
+        margin-left: auto;
+        width: min(430px, 100%);
+        height: 380px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+      .service-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        padding: 30px 52px;
+        border-top: 1px solid #eadfce;
+      }
+      .mini-service { text-align: center; }
+      .icon {
+        width: 42px;
+        height: 42px;
+        margin: 0 auto 12px;
+        border: 1px solid #c9aa70;
+        color: #9b6b2e;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+      }
+      .mini-service strong { display: block; font-size: 13px; }
+      .mini-service span { display: block; margin-top: 3px; color: #6a5c52; font-size: 11px; }
+      .hero-maroon {
+        display: grid;
+        grid-template-columns: .9fr 1.1fr;
+        align-items: center;
+        min-height: 480px;
+        padding: 0 52px 42px;
+      }
+      .hero-maroon h2 { margin: 0; max-width: 520px; font-size: 52px; line-height: 1.08; }
+      .hero-maroon img {
+        width: min(430px, 100%);
+        height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-left: auto;
+      }
+      .stats-box {
+        margin: 0 42px 34px;
+        border-radius: 6px;
+        background: rgba(255,255,255,.1);
+      }
+      .section {
+        max-width: 1180px;
+        margin: 0 auto 28px;
+        border-radius: 10px;
+        background: #faf6ef;
+        padding: 56px 42px;
+      }
+      .collections-grid {
+        display: grid;
+        grid-template-columns: .75fr 1.25fr;
+        gap: 42px;
+        align-items: center;
+      }
+      .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+      .collection-card {
+        position: relative;
+        height: 330px;
+        overflow: hidden;
+        border-radius: 10px;
+        background: #2b1710;
+      }
+      .collection-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+      .collection-card:hover img { transform: scale(1.05); }
+      .collection-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(0deg, rgba(0,0,0,.84), transparent 60%);
+      }
+      .collection-card div { position: absolute; z-index: 2; left: 24px; bottom: 24px; color: white; }
+      .collection-card h3 { margin: 0; font-size: 25px; }
+      .collection-card p { margin: 5px 0 0; color: rgba(255,255,255,.76); font-size: 12px; }
+      .solutions {
+        position: relative;
+        min-height: 450px;
+        padding: 0 42px 42px;
+      }
+      .solutions-bg {
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, #070707 0%, rgba(7,7,7,.9) 55%, rgba(7,7,7,.22) 100%),
+          url("https://images.unsplash.com/photo-1523438885200-e635ba2c371e?auto=format&fit=crop&w=1200&q=80") right center/contain no-repeat;
+      }
+      .solutions-content { position: relative; z-index: 2; max-width: 640px; padding-top: 70px; }
+      .solution-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 34px; }
+      .solution-card {
+        min-height: 128px;
+        padding: 18px;
+        border-radius: 6px;
+        border: 1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.08);
+      }
+      .solution-card h3 { margin: 16px 0 0; font-size: 15px; }
+      .solution-card p { margin: 7px 0 0; color: rgba(255,255,255,.64); font-size: 11px; line-height: 1.55; }
+      .testimonials { text-align: center; }
+      .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 38px; }
+      .testimonial {
+        border: 1px solid #e4d7c5;
+        background: #fffaf3;
+        border-radius: 8px;
+        padding: 34px 28px;
+      }
+      .stars { color: #b5853f; letter-spacing: .16em; }
+      .testimonial p { color: #51443c; font-size: 13px; line-height: 1.8; }
+      .gallery-head { text-align: center; }
+      .filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+      .filters button {
+        border: 1px solid #d9c8ad;
+        background: transparent;
+        border-radius: 999px;
+        padding: 9px 24px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 32px;
+      }
+      .gallery-grid img { width: 100%; aspect-ratio: 4 / 3; border-radius: 8px; object-fit: cover; object-position: center; }
+      .gallery-grid img.focus-safa { object-position: center 18%; }
+      .coverage {
+        max-width: 1180px;
+        margin: 0 auto 28px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .coverage-card {
+        background: #faf6ef;
+        border: 1px solid #e4d7c5;
+        border-radius: 10px;
+        padding: 34px;
+      }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+      .chip { background: #efe2cf; color: #6c3d24; border-radius: 999px; padding: 7px 12px; font-size: 12px; font-weight: 700; }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: .8fr 1.2fr;
+        gap: 44px;
+        padding-top: 34px;
+      }
+      .contact-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        border: 1px solid #eadfce;
+        background: #fffaf3;
+        border-radius: 10px;
+        padding: 28px;
+      }
+      input, textarea {
+        width: 100%;
+        border: 1px solid #e1d4c1;
+        background: transparent;
+        padding: 13px 14px;
+        color: #1f140f;
+        border-radius: 3px;
+        font: inherit;
+        font-size: 13px;
+      }
+      textarea { min-height: 120px; grid-column: 1 / -1; resize: vertical; }
+      .footer {
+        max-width: 1180px;
+        margin: 0 auto 28px;
+        border-radius: 10px;
+        background: #35100f;
+        color: white;
+        padding: 56px 42px 34px;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.2fr .8fr .8fr 1fr;
+        gap: 42px;
+      }
+      .footer h3, .footer h2 { color: #c99b54; margin-top: 0; }
+      .footer a, .footer p { color: rgba(255,255,255,.72); font-size: 13px; line-height: 1.9; }
+      .footer-bottom {
+        margin-top: 48px;
+        border-top: 1px solid rgba(255,255,255,.1);
+        padding-top: 26px;
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        color: rgba(255,255,255,.54);
+        font-size: 12px;
+      }
+      .legacy-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-top: 34px;
+      }
+      .legacy-card {
+        border: 1px solid #e4d7c5;
+        background: #fffaf3;
+        border-radius: 8px;
+        padding: 28px 22px;
+      }
+      .legacy-card strong {
+        display: block;
+        margin-top: 16px;
+        font-size: 15px;
+      }
+      .legacy-card p {
+        color: #6a5c52;
+        font-size: 13px;
+        line-height: 1.75;
+      }
+      .product-tabs {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin: 26px 0 34px;
+      }
+      .product-tabs button {
+        border: 0;
+        background: transparent;
+        color: #6a5c52;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .product-tabs button {
+        cursor: pointer;
+        padding-bottom: 6px;
+      }
+      .product-tabs button.active {
+        color: #7a2430;
+        border-bottom: 2px solid #7a2430;
+      }
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+      .product {
+        background: #fffaf3;
+        border: 1px solid #eadfce;
+        border-radius: 9px;
+        overflow: hidden;
+        position: relative;
+      }
+      .product-media {
+        height: 245px;
+        position: relative;
+        overflow: hidden;
+        background: #efe2cf;
+      }
+      .product-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform .45s ease;
+      }
+      .product:hover .product-media img { transform: scale(1.05); }
+      .sale {
+        position: absolute;
+        left: 12px;
+        top: 12px;
+        background: #7a2430;
+        color: white;
+        padding: 5px 9px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 800;
+      }
+      .quick {
+        position: absolute;
+        inset-inline: 16px;
+        bottom: 16px;
+        background: rgba(31,20,15,.88);
+        color: white;
+        border-radius: 4px;
+        padding: 10px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .product-body { padding: 18px; }
+      .product-body small {
+        display: block;
+        color: #9b6b2e;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        line-height: 1.6;
+      }
+      .product-body h3 {
+        margin: 10px 0;
+        font-size: 21px;
+        line-height: 1.12;
+      }
+      .price {
+        color: #7a2430;
+        font-weight: 800;
+        font-size: 14px;
+      }
+      .price s {
+        color: #9a8a7c;
+        margin-right: 8px;
+        font-weight: 500;
+      }
+      .service-copy-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        margin-top: 34px;
+      }
+      .service-copy-card {
+        border-radius: 9px;
+        background: #fffaf3;
+        border: 1px solid #eadfce;
+        padding: 26px;
+      }
+      .service-copy-card h3 {
+        margin: 0 0 14px;
+        font-size: 28px;
+      }
+      .service-copy-card ul {
+        margin: 0;
+        padding-left: 18px;
+        color: #5e5048;
+        font-size: 13px;
+        line-height: 1.9;
+      }
+      @media (max-width: 900px) {
+        .page { padding: 10px; }
+        .links { display: none; }
+        .hero-dark, .hero-light, .hero-maroon, .collections-grid, .contact-grid, .coverage, .footer-grid {
+          grid-template-columns: 1fr;
+        }
+        .safawala-copy { padding: 70px 26px; }
+        .hero-dark { padding: 32px 24px; }
+        .hero-visual { min-height: auto; }
+        .craft-badge { left: 12px; top: 18px; }
+        .fabric-card { right: 12px; bottom: 28px; }
+        h1 { font-size: 44px; }
+        .hero-light h2, .hero-maroon h2, .section-title { font-size: 36px; }
+        .stats, .service-row, .solution-grid, .testimonial-grid, .card-grid, .gallery-grid, .legacy-grid, .product-grid, .service-copy-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .solutions-bg { background: linear-gradient(90deg, #070707 0%, rgba(7,7,7,.88) 100%); }
+        .contact-form { grid-template-columns: 1fr; }
+        .footer-bottom { flex-direction: column; }
+      }
+      @media (max-width: 560px) {
+        .stats, .service-row, .solution-grid, .testimonial-grid, .card-grid, .gallery-grid, .legacy-grid, .product-grid, .service-copy-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section id="home" class="panel safawala-home">
+        <div class="announcement-bar">India’s Best Wedding Safa Rental Services — Book Now!</div>
+        <header class="nav">
+          <a class="brand" href="#home"><img class="brand-logo" src="https://safawala.com/wp-content/uploads/2025/09/Untitled-design-13.png" alt="Safawala"></a>
+          <nav class="links">
+            <a href="#home">Home</a><a href="#about-us">About Us</a><a href="#collections">Our Collections</a><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#contact">Contact Us</a>
+          </nav>
+          <div class="nav-tools"><a href="tel:+919725295691">+919725295691</a><span class="icon-btn">⌕</span><span class="icon-btn">♡</span></div>
+        </header>
+        <div class="safawala-slider">
+          <div class="hero-slides" aria-hidden="true"><span class="hero-slide"></span><span class="hero-slide"></span><span class="hero-slide"></span><span class="hero-slide"></span><span class="hero-slide"></span><span class="hero-slide"></span></div>
+          <div class="safawala-copy">
+            <h1>Every Fold, a Story of Legacy</h1>
+            <p>Each Safawala safa is meticulously draped using age-old techniques, blending authentic craftsmanship with a regal modern touch.</p>
+            <a class="btn" href="#contact">Contact Us</a>
+          </div>
+          <div class="safawala-dots"><span></span><span></span><span></span><span></span></div>
+        </div>
+        <div class="safawala-badges">
+          <div class="safawala-badge"><strong>✦</strong><span>Heritage in Every Fold</span></div>
+          <div class="safawala-badge"><strong>✦</strong><span>Tailored for You</span></div>
+          <div class="safawala-badge"><strong>✦</strong><span>Royal Fabrics</span></div>
+          <div class="safawala-badge"><strong>✦</strong><span>Perfect On-Site Tying</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="about-us">
+        <p class="eyebrow">Every Fold, a Story of Legacy</p>
+        <h2 class="section-title">Safawala-style craft, continued for Rishikesh weddings</h2>
+        <p class="muted" style="max-width:760px">Each safa is meticulously draped using age-old techniques, blending authentic craftsmanship with a regal modern touch for destination celebrations, groom entries, family processions and colour-coordinated barati groups.</p>
+        <div class="legacy-grid">
+          <article class="legacy-card"><div class="icon">✦</div><strong>Heritage in Every Fold</strong><p>Traditional draping techniques with a premium modern finish.</p></article>
+          <article class="legacy-card"><div class="icon">✂</div><strong>Tailored for You</strong><p>Colours, fabric mood and tying style matched to your wedding theme.</p></article>
+          <article class="legacy-card"><div class="icon">♛</div><strong>Royal Fabrics</strong><p>Ivory, blush, gold, crimson, bandhani and ceremony-ready textiles.</p></article>
+          <article class="legacy-card"><div class="icon">◷</div><strong>Perfect On-Site Tying</strong><p>Professional tying support at hotels, resorts, mandaps and venues.</p></article>
+        </div>
+      </section>
+
+      <section class="section" id="collections">
+        <div class="collections-grid">
+          <div>
+            <p>Our Collections</p>
+            <h2 class="section-title">A Safa for Every Style & Tradition</h2>
+            <p class="muted">Explore our wide range of premium safas and accessories crafted for every royal occasion.</p>
+            <a class="btn btn-gold" href="#gallery">View All Collections</a>
+          </div>
+          <div class="card-grid">
+            <article class="collection-card"><img src="https://safawala.com/wp-content/uploads/2025/08/Untitled-design-48.png" alt=""><div><h3>Royal Safa</h3><p>Timeless Royalty</p></div></article>
+            <article class="collection-card"><img src="https://safawala.com/wp-content/uploads/2026/07/Virat-Image-1.png" alt=""><div><h3>Designer Safa</h3><p>Modern Elegance</p></div></article>
+            <article class="collection-card"><img src="https://safawala.com/wp-content/uploads/2026/07/Rakul-Image.png" alt=""><div><h3>Barati Safa</h3><p>Vibrant & Elegant</p></div></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel dark" id="services">
+        <div class="solutions">
+          <div class="solutions-bg"></div>
+          <div class="solutions-content">
+            <p class="eyebrow">Our Services</p>
+            <h2 class="section-title">Complete Safa Solutions for Your Big Day</h2>
+            <p class="lead">From selection to tying, we ensure you and your baraatis look your best.</p>
+            <div class="solution-grid">
+              <article class="solution-card"><span>✤</span><h3>Groom Safa</h3><p>Premium safas for the groom</p></article>
+              <article class="solution-card"><span>♜</span><h3>Barati Safa</h3><p>Stylish safas for baraatis</p></article>
+              <article class="solution-card"><span>✦</span><h3>On-site Tying</h3><p>Professional tying team</p></article>
+              <article class="solution-card"><span>✣</span><h3>Accessories</h3><p>Brooches, kalgi, and more</p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <p class="eyebrow">Our Services</p>
+        <h2 class="section-title">At Safawala Rishikesh, tradition meets expert execution</h2>
+        <p class="muted" style="max-width:760px">We bring tradition, elegance and royalty to every celebration with wedding safa rental, styling, destination support and coordinated guest requirements.</p>
+        <div class="service-copy-grid">
+          <article class="service-copy-card"><h3>Safa Rental & Styling</h3><ul><li>Premium Safas & Turbans in countless fabrics, colors and styles</li><li>Traditional, Rajasthani, Royal and theme-based Safas</li><li>On-site expert team for professional Safa tying</li><li>Options for customized embroidery and personalization</li></ul></article>
+          <article class="service-copy-card"><h3>Wedding Safa for Grooms & Guests</h3><ul><li>Exclusive Groom Safa designs with a majestic royal look</li><li>Coordinated Safas for family, friends and guests</li><li>Bulk rental options for large wedding gatherings</li><li>Hassle-free delivery and styling at your venue</li></ul></article>
+          <article class="service-copy-card"><h3>Destination Weddings</h3><ul><li>Experienced styling support for Rishikesh and nearby destinations</li><li>Planning for riverside venues, resorts and family events</li><li>Specialized team for luxury, NRI and high-profile celebrations</li><li>Coverage support across nearby towns within the service radius</li></ul></article>
+          <article class="service-copy-card"><h3>Theme & Customized Safas</h3><ul><li>Safas matching wedding theme and decor</li><li>Corporate, festive and cultural program options</li><li>Personalization with initials, motifs or group identity</li><li>Accessory styling with kalgi, brooch, feather and stoles</li></ul></article>
+        </div>
+      </section>
+
+
+      <section class="section testimonials">
+        <p class="eyebrow">Testimonials</p>
+        <h2 class="section-title">Words from Our Happy Clients</h2>
+        <div class="testimonial-grid">
+          <article class="testimonial"><div class="stars">★★★★★</div><p>“The safas were amazing and added the perfect royal touch to our wedding.”</p><strong>— Amit & Priya</strong></article>
+          <article class="testimonial"><div class="stars">★★★★★</div><p>“Excellent service and on-time delivery. Highly recommended for destination weddings.”</p><strong>— Rajat Sharma</strong></article>
+          <article class="testimonial"><div class="stars">★★★★★</div><p>“The on-site tying team was professional and very cooperative.”</p><strong>— Neha & Karan</strong></article>
+        </div>
+      </section>
+
+      <section class="section" id="gallery">
+        <div class="gallery-head">
+          <p>Our Work</p>
+          <h2 class="section-title">Moments of Royalty</h2>
+        </div>
+        <div class="gallery-grid">
+          <img src="./assets/our-work/safawala-work-1.png" alt="">
+          <img src="./assets/our-work/safawala-work-2.png" alt="">
+          <img src="./assets/our-work/safawala-work-3.png" alt="">
+          <img class="focus-safa" src="./assets/our-work/safawala-work-4.png" alt="">
+          <img src="./assets/our-work/safawala-work-5.png" alt="">
+          <img src="./assets/our-work/safawala-work-6.png" alt="">
+        </div>
+      </section>
+
+      <section class="coverage">
+        <div class="coverage-card"><h2>Internal Areas in Rishikesh</h2><div class="chips"><span class="chip">Tapovan</span><span class="chip">Muni Ki Reti</span><span class="chip">Swarg Ashram</span><span class="chip">Ram Jhula</span><span class="chip">Laxman Jhula</span><span class="chip">Shivpuri</span><span class="chip">Bharat Mandir Area</span><span class="chip">IDPL</span><span class="chip">Awas Vikas</span><span class="chip">Shyampur</span><span class="chip">Virbhadra</span><span class="chip">Ganga Nagar</span><span class="chip">Barrage Road</span><span class="chip">Nirmal Block</span><span class="chip">Rishikesh Bypass</span></div></div>
+        <div class="coverage-card"><h2>Nearby Targets Within ~200 km</h2><div class="chips"><span class="chip">Haridwar</span><span class="chip">Dehradun</span><span class="chip">Roorkee</span><span class="chip">Muzaffarnagar</span><span class="chip">Saharanpur</span><span class="chip">Najibabad</span><span class="chip">Kotdwar</span><span class="chip">Lansdowne</span><span class="chip">Narendranagar</span><span class="chip">Devprayag</span><span class="chip">Doiwala</span><span class="chip">Kaudiyala</span><span class="chip">Tehri</span><span class="chip">Chamba</span><span class="chip">Mussoorie</span><span class="chip">Vikasnagar</span></div></div>
+      </section>
+
+      <section class="section" id="contact">
+        <div class="contact-grid">
+          <div><p>Get In Touch</p><h2 class="section-title">Plan Your Royal Wedding Experience</h2><p class="muted">Share your requirements and our team will get back to you shortly.</p><p>☎ +91 9725295691</p><p>✉ info@safawalarishikesh.com</p><p>⌖ Rishikesh, Uttarakhand, India</p></div>
+          <form class="contact-form"><input placeholder="Your Name"><input placeholder="Phone Number"><input placeholder="Email Address"><input placeholder="Event Date"><input placeholder="City"><input placeholder="Type of Service"><textarea placeholder="Message"></textarea><button class="btn btn-maroon" type="button">Send Enquiry</button></form>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-grid">
+          <div><h2>Safawala Rishikesh</h2><p>Premium wedding safa rental, styling and on-site tying services for destination weddings in Rishikesh and beyond.</p><p style="color:#c99b54">f · ig · yt</p></div>
+          <div><h3>Quick Links</h3><p>Home<br>About Us<br>Collections<br>Services<br>Gallery<br>Contact</p></div>
+          <div><h3>Our Services</h3><p>Groom Safa<br>Barati Safa<br>On-site Tying<br>Accessories<br>Destination Weddings</p></div>
+          <div><h3>Contact Us</h3><p>☎ +91 9725295691<br>✉ info@safawalarishikesh.com<br>⌖ Rishikesh, Uttarakhand India</p></div>
+        </div>
+        <div class="footer-bottom"><span>© 2026 Safawala Rishikesh. All Rights Reserved.</span><span>Privacy Policy&nbsp;&nbsp;&nbsp; Terms & Conditions</span></div>
+      </footer>
+    </div>
+  </body>
+</html>
