@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { gallery, internalLocations, nearbyLocations, primaryKeywords, services } from "./site-data";
+import { gallery, internalLocations, nearbyLocations, services } from "./site-data";
 
 const faq = [
   ["How much does a wedding safa tying service cost in Rishikesh?", "Pricing depends on the number of safas, selected fabric, accessories, venue location and time available for tying. Send your date, venue and approximate headcount for a tailored quote."],
@@ -12,8 +12,19 @@ const faq = [
   ["Do you travel from Rishikesh to Haridwar, Dehradun or Mussoorie?", "Yes, subject to date and travel availability. Nearby-city bookings are planned as outstation assignments with the venue pin and reporting time confirmed in advance."],
 ];
 
+const safaStyles = [
+  ["Rajasthani & Rajwadi", "Structured royal folds for a traditional groom pagdi, family pagdi or coordinated baraati safa look."],
+  ["Jodhpuri Safa", "A refined, high-profile style that pairs well with bandhgalas, achkans and detailed sherwanis."],
+  ["Bandhani & Leheriya", "Colour-rich wedding safas that bring movement and regional character to daytime and outdoor celebrations."],
+  ["Marwari Pagdi", "A heritage-led silhouette for families who want a strong traditional identity across the wedding party."],
+  ["Pastel Designer Safa", "Ivory, blush, peach, mint and muted gold palettes designed around modern destination-wedding décor."],
+  ["Custom Groom Turban", "A distinctive groom safa with considered height, pleats, kalgi, brooch or feather placement."],
+];
+
 export default function HomeClient() {
-  const [drawer, setDrawer] = useState<"areas" | "keywords" | null>(null);
+  const [expandedAreas, setExpandedAreas] = useState(false);
+  const [expandedSearches, setExpandedSearches] = useState(false);
+  const allLocations = [...internalLocations, ...nearbyLocations];
 
   function submitInquiry(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,10 +44,10 @@ export default function HomeClient() {
     <>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Safawala Rishikesh home">
-          <span className="brand-mark">S</span><span><strong>SAFAWALA</strong><small>RISHIKESH</small></span>
+          <span className="brand-logo-window"><img src="/safawala-logo-transparent.png" alt="Safawala" /></span><small>RISHIKESH</small>
         </a>
         <nav aria-label="Main navigation">
-          <a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#areas">Areas</a><a href="#faq">FAQs</a>
+          <a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#footer-areas">Areas</a><a href="#faq">FAQs</a>
         </nav>
         <a className="header-cta" href="https://wa.me/919725295691?text=Hello%20Safawala%20Rishikesh%2C%20I%20want%20to%20check%20availability.">Check availability</a>
       </header>
@@ -44,9 +55,9 @@ export default function HomeClient() {
       <main id="top">
         <section className="hero section-shell">
           <div className="hero-copy">
-            <p className="eyebrow">Wedding safa specialists · Rishikesh</p>
+            <p className="eyebrow">Royal Safas · Timeless Traditions</p>
             <h1>Wedding Safa Wala in Rishikesh</h1>
-            <p className="hero-lede">Elegant groom pagdi and coordinated baraati safa styling—brought to your hotel, resort, home or wedding venue.</p>
+            <p className="hero-lede">Expert groom pagdi and coordinated baraati safa styling, delivered at your Rishikesh wedding venue.</p>
             <div className="hero-actions"><a className="button primary" href="#quote">Get a free quote</a><a className="text-link" href="#gallery">View real celebrations <span>↗</span></a></div>
             <div className="hero-photo">
               <img src="/gallery/mountain-wedding.webp" alt="Groom in an ivory wedding safa celebrating under rose petals" />
@@ -83,9 +94,31 @@ export default function HomeClient() {
           </div>
         </section>
 
+        <section className="seo-intro section-shell" aria-labelledby="rishikesh-safa-heading">
+          <div className="seo-intro-heading">
+            <p className="eyebrow">Wedding safa rental & styling</p>
+            <h2 id="rishikesh-safa-heading">Professional wedding safa tying in Rishikesh, planned from fabric to final fold.</h2>
+          </div>
+          <div className="seo-intro-copy">
+            <p>Safawala Rishikesh provides <strong>wedding safa rental, groom pagdi styling and professional turban tying</strong> for local and destination weddings. Instead of sending loose turbans without a plan, our on-site safa tying artists work around the groom’s ready time, the baraat departure, photography and the number of guests who must be prepared together.</p>
+            <p>Couples searching for a <strong>safa wala in Rishikesh</strong>, a groom safa specialist or a complete baraati safa service can coordinate the fabric, colour, style, quantity and tying team in one enquiry. The service can cover the groom, fathers, brothers, close family, groomsmen and the full wedding party.</p>
+          </div>
+          <div className="seo-feature-grid">
+            <article><span>01</span><h3>Groom safa and wedding pagdi</h3><p>A dedicated, camera-ready groom pagdi session with optional kalgi, brooch, feather and coordinated stole details.</p></article>
+            <article><span>02</span><h3>Baraati safa rental and tying</h3><p>Matching guest safas, bulk wedding turban planning and enough trained artists to complete larger groups on time.</p></article>
+            <article><span>03</span><h3>On-site destination wedding team</h3><p>Venue-based styling at hotels, resorts, homes and wedding properties across Rishikesh and nearby hill destinations.</p></article>
+          </div>
+        </section>
+
         <section className="editorial section-shell">
-          <div className="editorial-image"><img src="/gallery/ivory-safa-moment.webp" alt="Groom wearing a soft ivory safa with floral detailing" /></div>
-          <div className="editorial-copy"><p className="eyebrow">Rishikesh wedding planning</p><h2>Calm preparation before the celebration begins.</h2><p>Destination weddings around Tapovan, Shivpuri, Narendranagar and the river-side hospitality belt often spread guests across rooms, cottages and separate properties. A beautiful safa service only works when the logistics are equally refined.</p><p>We confirm the venue pin, reporting time, final headcount and preparation room before the event. The groom receives an unhurried styling slot; family and baraatis follow in planned batches with enough artists to protect the schedule.</p><ul><li>On-location hotel, resort and home service</li><li>Groom, family and baraati styling plans</li><li>Colour coordination from outfit references</li><li>Travel planning for nearby destinations</li></ul><a className="button dark" href="#areas">See service areas</a></div>
+          <div className="editorial-image"><img src="/gallery/rishikesh-editorial.webp" alt="Groom wearing a refined ivory wedding safa and embroidered sherwani" /></div>
+          <div className="editorial-copy"><p className="eyebrow">Rishikesh wedding planning</p><h2>Calm preparation before the celebration begins.</h2><p>Destination weddings around Tapovan, Shivpuri, Narendranagar and the river-side hospitality belt often spread guests across rooms, cottages and separate properties. A beautiful safa service only works when the logistics are equally refined.</p><p>We confirm the venue pin, reporting time, final headcount and preparation room before the event. The groom receives an unhurried styling slot; family and baraatis follow in planned batches with enough artists to protect the schedule.</p><ul><li>On-location hotel, resort and home service</li><li>Groom, family and baraati styling plans</li><li>Colour coordination from outfit references</li><li>Travel planning for nearby destinations</li></ul></div>
+        </section>
+
+        <section className="styles-section section-shell" aria-labelledby="styles-heading">
+          <div className="section-heading"><div><p className="eyebrow">Styles, fabrics and colours</p><h2 id="styles-heading">A wedding safa collection for traditional and modern Rishikesh celebrations.</h2></div><p>Choose the direction first, then refine the fabric and colour against the groom’s sherwani, family outfits, floral palette and venue lighting.</p></div>
+          <div className="styles-grid">{safaStyles.map(([name, description], index) => <article key={name}><span className="style-number">0{index + 1}</span><div><h3>{name}</h3><p>{description}</p></div></article>)}</div>
+          <div className="fabric-note"><strong>Popular fabric and colour requests</strong><p>Silk wedding safa, premium fabric safa, embroidered pagdi, Bandhani safa, ivory groom safa, cream wedding pagdi, maroon wedding safa, red wedding turban, gold groom pagdi, blush pink and sage green guest safas.</p></div>
         </section>
 
         <section className="gallery-section" id="gallery">
@@ -98,15 +131,27 @@ export default function HomeClient() {
           <ol><li><span>01</span><div><h3>Share the wedding plan</h3><p>Date, venue, guest count, timing and the people who need safas.</p></div></li><li><span>02</span><div><h3>Align colour and style</h3><p>Send outfit references and choose a groom-led or coordinated family palette.</p></div></li><li><span>03</span><div><h3>Confirm the team</h3><p>We assign enough artists for the tying window and venue logistics.</p></div></li><li><span>04</span><div><h3>Arrive wedding-ready</h3><p>The groom is styled first; family and baraatis follow in organised batches.</p></div></li></ol>
         </section>
 
-        <section className="locations-section" id="areas">
-          <div className="section-shell"><div className="section-heading"><div><p className="eyebrow">Local coverage</p><h2>Rishikesh areas & destination routes</h2></div><p>Each linked page is built around the location's booking context, planning needs and its own FAQs—not a city name pasted into the same article.</p></div>
-            <div className="location-columns"><div><h3>Inside Rishikesh <span>15</span></h3><div className="location-links">{internalLocations.map((item) => <a href={`/${item.slug}`} key={item.slug}>{item.name}<span>↗</span></a>)}</div></div><div><h3>Nearby destinations <span>16 unique</span></h3><div className="location-links">{nearbyLocations.map((item) => <a href={`/${item.slug}`} key={item.slug}>{item.name}<span>↗</span></a>)}</div></div></div>
-            <p className="coverage-note">The supplied 18-item nearby list repeats Shivpuri and Rishikesh Bypass, which are already included as Rishikesh areas. This structure keeps one canonical page for each location.</p>
+        <section className="seo-guide">
+          <div className="section-shell">
+            <div className="section-heading"><div><p className="eyebrow">A useful booking guide</p><h2>A clearer way to plan your wedding safa service.</h2></div><p>Your quote is shaped by the fabric, quantity, location and time available for styling.</p></div>
+            <div className="guide-grid">
+              <article><span>01</span><h3>Price and packages</h3><p>Wedding safa price depends on fabric, guest quantity, tying style, groom accessories, artist count and venue distance. Share your date, venue pin and headcount for a useful package estimate.</p></article>
+              <article><span>02</span><h3>Destination logistics</h3><p>For Rishikesh hotels, resorts and nearby hill venues, we plan the arrival buffer, preparation room and tying sequence so the groom and baraatis are ready on time.</p></article>
+              <article><span>03</span><h3>Functions and groups</h3><p>Book a groom safa, family pagdi service or full baraati safa team for the wedding, engagement, reception, sangeet, haldi or mehndi.</p></article>
+              <article><span>04</span><h3>Comfort and finishing</h3><p>Each wedding pagdi is balanced for shape and comfort, with kalgi, brooch, feather or pearl details used selectively for a polished finish.</p></article>
+            </div>
           </div>
         </section>
 
-        <section className="keyword-section section-shell">
-          <div className="keyword-panel"><div><p className="eyebrow">Popular service searches</p><h2>Useful pages, organised by intent.</h2><p>Closely related phrases belong on one strong service page. We repeat important terms naturally where they help the reader and avoid creating hundreds of near-duplicate pages.</p></div><div className="keyword-cloud">{primaryKeywords.map((keyword) => <span key={keyword}>{keyword}</span>)}</div></div>
+        <section className="explore-section section-shell" id="areas" aria-label="Explore Rishikesh service pages">
+          <article className="explore-card">
+            <div className="explore-card-head"><div><h2>Areas we serve in Rishikesh</h2><p>{allLocations.length} locations across Rishikesh and nearby destinations.</p></div><button type="button" onClick={() => setExpandedAreas((value) => !value)} aria-expanded={expandedAreas}>{expandedAreas ? "View less" : "View more"}</button></div>
+            <div className="explore-chip-links">{allLocations.slice(0, expandedAreas ? allLocations.length : 8).map((area) => <a href={`/${area.slug}`} key={area.slug}>{area.name}</a>)}</div>
+          </article>
+          <article className={`explore-card explore-card-compact ${expandedSearches ? "is-expanded" : ""}`}>
+            <div className="explore-card-head"><div><h2>Popular wedding safa searches</h2><p>Focused pages for groom pagdi, baraati safa and wedding turban services.</p></div><button type="button" onClick={() => setExpandedSearches((value) => !value)} aria-expanded={expandedSearches}>{expandedSearches ? "Hide pages" : "View all"}</button></div>
+            {expandedSearches && <div className="explore-chip-links">{services.map((service) => <a href={`/services/${service.slug}`} key={service.slug}>{service.name}</a>)}</div>}
+          </article>
         </section>
 
         <section className="faq-section section-shell" id="faq">
@@ -114,13 +159,16 @@ export default function HomeClient() {
           <div className="faq-list">{faq.map(([question, answer], index) => <details key={question} open={index === 0}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div>
         </section>
 
-        <section className="final-cta"><div className="section-shell"><p className="eyebrow">Your date deserves a clear plan</p><h2>Bring the wedding party together—beautifully.</h2><p>Share your Rishikesh venue, date and approximate number of safas. We’ll suggest the right team and styling direction.</p><a className="button light" href="#quote">Request availability</a></div></section>
       </main>
 
-      <footer><div className="section-shell footer-grid"><div><a className="brand footer-brand" href="#top"><span className="brand-mark">S</span><span><strong>SAFAWALA</strong><small>RISHIKESH</small></span></a><p>Professional wedding safa, groom pagdi and baraati turban styling across Rishikesh and nearby destinations.</p></div><div><h3>Explore</h3><a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#areas">Areas</a><a href="#faq">FAQs</a></div><div><h3>Contact</h3><a href="tel:+919725295691">+91 97252 95691</a><a href="https://wa.me/919725295691">WhatsApp the team</a><span>Rishikesh, Uttarakhand</span></div></div><div className="copyright section-shell"><span>© 2026 Safawala Rishikesh</span><span>Wedding styling with clarity, craft and care.</span></div></footer>
+      <footer>
+        <div className="section-shell footer-top">
+          <div className="footer-intro"><a className="brand footer-brand" href="#top"><span className="brand-logo-window"><img src="/safawala-logo-transparent.png" alt="Safawala" /></span><small>RISHIKESH</small></a><h2>Every fold carries the celebration.</h2><p>Wedding safa rental, groom pagdi styling and professional turban tying for Rishikesh weddings, family functions and nearby destinations.</p><a className="footer-whatsapp" href="https://wa.me/919725295691?text=Hello%20Safawala%20Rishikesh%2C%20I%20want%20to%20check%20availability.">Plan on WhatsApp <span>↗</span></a></div>
+          <div className="footer-links"><div><h3>Services</h3>{services.slice(0,4).map((service) => <a href={`/services/${service.slug}`} key={service.slug}>{service.name}</a>)}</div><div id="footer-areas"><h3>Popular areas</h3>{internalLocations.slice(0,5).map((area) => <a href={`/${area.slug}`} key={area.slug}>{area.name}</a>)}</div><div><h3>Contact</h3><a href="tel:+919725295691">+91 97252 95691</a><a href="https://wa.me/919725295691">WhatsApp the team</a><span>Rishikesh, Uttarakhand</span><span>Mon–Sat · 10:00–19:00</span></div></div>
+        </div>
+        <div className="copyright section-shell"><span>© 2026 Safawala Rishikesh</span><span>Wedding safa, pagdi and turban artistry.</span></div>
+      </footer>
 
-      <div className="explore-dock" aria-label="Explore local SEO pages"><button onClick={() => setDrawer("areas")}><span>⌖</span><b>Areas we serve</b><small>31 locations</small></button><button onClick={() => setDrawer("keywords")}><span>↗</span><b>Popular searches</b><small>6 focused pages</small></button></div>
-      {drawer && <div className="drawer-backdrop" role="presentation" onMouseDown={() => setDrawer(null)}><aside className="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" onMouseDown={(event) => event.stopPropagation()}><button className="drawer-close" onClick={() => setDrawer(null)} aria-label="Close panel">×</button>{drawer === "areas" ? <><p className="eyebrow">Service network</p><h2 id="drawer-title">Choose your area</h2><p>Open a location page with its own planning guidance and FAQs.</p><div className="drawer-links">{[...internalLocations, ...nearbyLocations].map((item) => <a href={`/${item.slug}`} key={item.slug}>{item.name}<span>→</span></a>)}</div></> : <><p className="eyebrow">Search by service</p><h2 id="drawer-title">What are you looking for?</h2><p>Focused service pages consolidate related keywords into genuinely useful content.</p><div className="drawer-links">{services.map((item) => <a href={`/services/${item.slug}`} key={item.slug}>{item.name}<span>→</span></a>)}</div></>}</aside></div>}
     </>
   );
 }

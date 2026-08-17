@@ -57,15 +57,29 @@ function slugify(name: string) {
   return name.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
 
-export const locations: LocationItem[] = [...internalNames, ...nearbyNames].map((name) => {
+const paletteIdeas = [
+  "ivory and antique gold", "maroon and muted gold", "rust and cream", "saffron and ivory",
+  "wine and beige", "sage green and ivory", "rose pink and cream", "mustard and deep red",
+];
+
+const finishIdeas = [
+  "a structured Rajwadi fold", "a refined Jodhpuri profile", "a colour-rich Bandhani drape",
+  "a clean Marwari silhouette", "a softer destination-wedding fold", "a classic groom pagdi finish",
+];
+
+export const locations: LocationItem[] = [...internalNames, ...nearbyNames].map((name, index) => {
   const [summary, planning] = localNotes[name];
   const group = internalNames.includes(name) ? "Rishikesh area" : "Nearby destination";
+  const palette = paletteIdeas[index % paletteIdeas.length];
+  const finish = finishIdeas[index % finishIdeas.length];
   return {
     slug: slugify(name), name, group, summary, planning,
     faq: [
-      [`Do you provide wedding safa tying in ${name}?`, `Yes. ${name} is included in our ${group === "Rishikesh area" ? "local Rishikesh" : "planned outstation"} service network, subject to date and team availability.`],
-      [`How is a ${name} booking confirmed?`, `Send the event date, venue pin, reporting time, approximate number of safas and preferred colours. We confirm the team plan and quote after reviewing those details.`],
-      [`Can the groom and baraatis have different styles in ${name}?`, `Yes. The groom can have a more detailed pagdi treatment while family members and baraatis use a coordinated style that is faster to tie in larger numbers.`],
+      [`Can I book a professional wedding safa wala in ${name}?`, `Yes. ${summary} We accept ${name} bookings as a ${group === "Rishikesh area" ? "local on-location service" : "pre-planned travelling assignment"}, subject to the wedding date and artist availability.`],
+      [`What should we confirm for a ${name} wedding venue?`, `${planning} Please send the exact venue pin, preparation-room details and the groom’s ready-by time rather than only the venue name.`],
+      [`Which groom pagdi style suits a wedding in ${name}?`, `${finish} works particularly well with ${palette} palettes, although the final groom pagdi is selected from the sherwani, face profile, jewellery and ceremony setting.`],
+      [`How many safa artists are needed for a ${name} baraat?`, `The team size depends on the final number of baraati safas and the time between guest arrival and procession departure. For ${name}, we separate the groom’s detailed session from faster family and baraati batches.`],
+      [`Can you provide family pagdis and baraati safas in different colours?`, `Yes. For a ${name} celebration, the groom can remain distinctive while parents, close family and the wider baraat use complementary colour groups. Share outfit references before fabric is finalised.`],
     ],
   };
 });
@@ -82,6 +96,37 @@ export const services = [
   { slug: "custom-safa-colours", name: "Custom Safa Colours", title: "Custom Wedding Safa Colours in Rishikesh", intro: "Colour-led safa planning for couples who want the groom and guests aligned with outfits, flowers or the overall décor palette.", detail: "We work from visual references and recommend combinations that remain elegant in daylight, indoor lighting and wedding photography.", faqs: [["Can you match an exact outfit colour?", "We can work toward a close coordinated match; physical fabric may vary slightly from screen colours."], ["Which colours photograph well outdoors?", "Ivory, rust, maroon, saffron, muted pink and deeper jewel tones generally retain definition in outdoor light."], ["Can the groom use a contrast colour?", "Yes. A controlled contrast is often the best way to keep the groom visually distinct."]] },
 ];
 
+const serviceFaqAdditions: Record<string, [string, string][]> = {
+  "wedding-safa-tying": [
+    ["How long does wedding safa tying take in Rishikesh?", "Timing depends on the fold and group size. Once we know the guest quantity and ready-by time, we recommend the artist count and a practical batch schedule."],
+    ["Are the safas supplied with the tying service?", "The fabric and styling requirement are confirmed together. Share whether you need a complete safa package or tying support for fabric already selected by the family."],
+  ],
+  "groom-pagdi": [
+    ["Can the groom pagdi include a kalgi or brooch?", "Yes. Kalgi, brooch, feather and pearl details can be positioned after reviewing the sherwani and jewellery so the final look remains balanced."],
+    ["Can we arrange a groom pagdi trial before the wedding?", "A trial or detailed reference consultation can be discussed when the style is highly specific or the groom wants to compare more than one profile."],
+  ],
+  "baraati-safa": [
+    ["How do you keep every baraati safa consistent?", "The team agrees one repeatable fold and colour direction, then divides guests into organised batches so the group looks coordinated in procession photographs."],
+    ["Can late-arriving wedding guests also be included?", "Keep a small fabric and time buffer for late additions. A family coordinator should direct those guests to the tying area before the artists pack up."],
+  ],
+  "destination-wedding-safa": [
+    ["Do destination bookings include artist travel planning?", "Yes. The quote accounts for the venue route, reporting time, access, required arrival buffer and, where necessary, artist accommodation."],
+    ["Can you coordinate directly with our hotel or wedding planner?", "Yes. One planner or hotel contact can confirm the preparation room, guest sequence and property access before the team arrives."],
+  ],
+  "family-pagdi": [
+    ["Can fathers and brothers have a more detailed family pagdi?", "Yes. Close family can use a refined fold or complementary accessory while the wider group uses a simpler coordinated style."],
+    ["How should we divide colours between both families?", "Choose two complementary shades from the outfits or décor and reserve the most distinctive treatment for the groom."],
+  ],
+  "custom-safa-colours": [
+    ["When should custom safa colours be finalised?", "Finalise the direction after the main outfits are selected and early enough to review fabric under both daylight and indoor lighting."],
+    ["Can guest safas use multiple coordinated colours?", "Yes. Two or three controlled shades can identify family groups while still looking cohesive across the full baraat."],
+  ],
+};
+
+export function getServiceFaqs(service: (typeof services)[number]) {
+  return [...service.faqs, ...(serviceFaqAdditions[service.slug] ?? [])] as [string, string][];
+}
+
 export const primaryKeywords = [
   "wedding safa wala in Rishikesh", "safa tying service Rishikesh", "groom pagdi Rishikesh",
   "baraati safa service", "wedding turban tying", "destination wedding safa team",
@@ -90,10 +135,10 @@ export const primaryKeywords = [
 ];
 
 export const gallery = [
-  ["/gallery/mountain-wedding.webp", "Groom in an ivory wedding safa celebrating under rose petals"],
-  ["/gallery/ivory-safa-moment.webp", "Groom wearing a soft ivory safa with floral detailing"],
-  ["/gallery/heritage-couple.webp", "Wedding portrait series featuring a classic ivory groom safa"],
-  ["/gallery/wedding-dance.webp", "Newly married couple dancing with the groom in a wedding safa"],
-  ["/gallery/emerald-safa-couple.webp", "Groom in an ivory safa accented with emerald jewellery"],
-  ["/gallery/wedding-detail.webp", "Close wedding detail showing coordinated ivory and green attire"],
+  ["/gallery/ivory-groom.webp", "Groom in an ivory wedding safa with emerald jewellery"],
+  ["/gallery/safa-detail.webp", "Close detail of a red wedding safa with an emerald kalgi"],
+  ["/gallery/classic-groom.webp", "Classic groom pagdi styled with a red ceremonial stole"],
+  ["/gallery/royal-groom.webp", "Royal red wedding safa and embroidered groom styling"],
+  ["/gallery/outdoor-groom.webp", "Pastel groom safa photographed in natural daylight"],
+  ["/gallery/coordinated-grooms.webp", "Coordinated ivory wedding pagdis for a formal celebration"],
 ] as const;
