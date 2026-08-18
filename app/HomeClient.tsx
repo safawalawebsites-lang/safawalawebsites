@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { gallery, internalLocations, nearbyLocations, services } from "./site-data";
+import SiteFooter from "./SiteFooter";
 
 const faq = [
   ["How much does a wedding safa tying service cost in Rishikesh?", "Pricing depends on the number of safas, selected fabric, accessories, venue location and time available for tying. Send your date, venue and approximate headcount for a tailored quote."],
@@ -44,7 +45,7 @@ export default function HomeClient() {
     <>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Safawala Rishikesh home">
-          <span className="brand-logo-window"><img src="/safawala-logo-transparent.png" alt="Safawala" /></span><small>RISHIKESH</small>
+          <span className="brand-logo-window"><img src="/safawala-logo-current.png" alt="Safawala" /></span><small>RISHIKESH</small>
         </a>
         <nav aria-label="Main navigation">
           <a href="#services">Services</a><a href="#gallery">Gallery</a><a href="#footer-areas">Areas</a><a href="#faq">FAQs</a>
@@ -55,9 +56,9 @@ export default function HomeClient() {
       <main id="top">
         <section className="hero section-shell">
           <div className="hero-copy">
-            <p className="eyebrow">Royal Safas · Timeless Traditions</p>
-            <h1>Wedding Safa Wala in Rishikesh</h1>
-            <p className="hero-lede">Expert groom pagdi and coordinated baraati safa styling, delivered at your Rishikesh wedding venue.</p>
+            <p className="eyebrow">Rishikesh Wedding Safa Specialists</p>
+            <h1>Royal Safas. Perfectly Styled.</h1>
+            <p className="hero-lede">Expert groom pagdi and coordinated baraati safa service, delivered to your hotel, resort or wedding venue across Rishikesh.</p>
             <div className="hero-actions"><a className="button primary" href="#quote">Get a free quote</a><a className="text-link" href="#gallery">View real celebrations <span>↗</span></a></div>
             <div className="hero-photo">
               <img src="/gallery/mountain-wedding.webp" alt="Groom in an ivory wedding safa celebrating under rose petals" />
@@ -161,13 +162,7 @@ export default function HomeClient() {
 
       </main>
 
-      <footer>
-        <div className="section-shell footer-top">
-          <div className="footer-intro"><a className="brand footer-brand" href="#top"><span className="brand-logo-window"><img src="/safawala-logo-transparent.png" alt="Safawala" /></span><small>RISHIKESH</small></a><h2>Every fold carries the celebration.</h2><p>Wedding safa rental, groom pagdi styling and professional turban tying for Rishikesh weddings, family functions and nearby destinations.</p><a className="footer-whatsapp" href="https://wa.me/919725295691?text=Hello%20Safawala%20Rishikesh%2C%20I%20want%20to%20check%20availability.">Plan on WhatsApp <span>↗</span></a></div>
-          <div className="footer-links"><div><h3>Services</h3>{services.slice(0,4).map((service) => <a href={`/services/${service.slug}`} key={service.slug}>{service.name}</a>)}</div><div id="footer-areas"><h3>Popular areas</h3>{internalLocations.slice(0,5).map((area) => <a href={`/${area.slug}`} key={area.slug}>{area.name}</a>)}</div><div><h3>Contact</h3><a href="tel:+919725295691">+91 97252 95691</a><a href="https://wa.me/919725295691">WhatsApp the team</a><span>Rishikesh, Uttarakhand</span><span>Mon–Sat · 10:00–19:00</span></div></div>
-        </div>
-        <div className="copyright section-shell"><span>© 2026 Safawala Rishikesh</span><span>Wedding safa, pagdi and turban artistry.</span></div>
-      </footer>
+      <SiteFooter />
 
     </>
   );
