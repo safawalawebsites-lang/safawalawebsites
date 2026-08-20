@@ -1,10 +1,10 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, ReactNode, useState } from "react";
 import { gallery, internalLocations, nearbyLocations, services } from "./site-data";
 import SiteFooter from "./SiteFooter";
 
-const serviceIcons: Record<string, JSX.Element> = {
+const serviceIcons: Record<string, ReactNode> = {
   "wedding-safa-tying": (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l4.5 4.5L12 4l4.5 9.5L21 9" /><path d="M4.5 20h15" /></svg>
   ),
