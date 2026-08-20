@@ -4,6 +4,21 @@ import { FormEvent, useState } from "react";
 import { gallery, internalLocations, nearbyLocations, services } from "./site-data";
 import SiteFooter from "./SiteFooter";
 
+const serviceIcons: Record<string, JSX.Element> = {
+  "wedding-safa-tying": (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l4.5 4.5L12 4l4.5 9.5L21 9" /><path d="M4.5 20h15" /></svg>
+  ),
+  "groom-pagdi": (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z" /></svg>
+  ),
+  "baraati-safa": (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="8.5" cy="8" r="3" /><path d="M2.5 20a6 6 0 0 1 12 0" /><path d="M15.5 6.2a3 3 0 0 1 0 5.6" /><path d="M17.5 14.2a6 6 0 0 1 4 5.8" /></svg>
+  ),
+  "destination-wedding-safa": (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21s-7-6.2-7-11.2a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.8" r="2.4" /></svg>
+  ),
+};
+
 const faq = [
   ["How much does a wedding safa tying service cost in Rishikesh?", "Pricing depends on the number of safas, selected fabric, accessories, venue location and time available for tying. Send your date, venue and approximate headcount for a tailored quote."],
   ["Do you provide safa tying at Rishikesh hotels and resorts?", "Yes. Our artists travel to hotels, resorts, homes and wedding venues across Rishikesh, Tapovan, Muni Ki Reti, Shivpuri and the wider service area."],
@@ -11,6 +26,15 @@ const faq = [
   ["How early should a destination wedding book the safa team?", "For peak dates and larger groups, book several weeks ahead. Early confirmation gives more time to finalise colours, fabrics and the correct number of artists."],
   ["Can the safa colour match our outfits or wedding décor?", "Yes. Share clear outfit and décor references. We can create a coordinated palette while keeping the groom's pagdi visually distinctive."],
   ["Do you travel from Rishikesh to Haridwar, Dehradun or Mussoorie?", "Yes, subject to date and travel availability. Nearby-city bookings are planned as outstation assignments with the venue pin and reporting time confirmed in advance."],
+];
+
+const safaStyleIcons = [
+  <svg key="crown" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l4.5 4.5L12 4l4.5 9.5L21 9" /><path d="M4.5 20h15" /></svg>,
+  <svg key="gem" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M6 3h12l3 6-9 12L3 9z" /><path d="M3 9h18" /><path d="M9 3l3 6 3-6" /></svg>,
+  <svg key="waves" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M2 9c2.5-2 5-2 7.5 0s5 2 7.5 0 5-2 7.5 0" /><path d="M2 16c2.5-2 5-2 7.5 0s5 2 7.5 0 5-2 7.5 0" /></svg>,
+  <svg key="shield" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l7 3v6c0 5-3.5 8-7 9-3.5-1-7-4-7-9V6l7-3z" /></svg>,
+  <svg key="palette" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.2 0 2-1 2-2 0-.5-.2-1-.5-1.3-.3-.3-.5-.8-.5-1.2 0-1 .8-1.5 1.8-1.5H17a4 4 0 0 0 4-4c0-5-4-8-9-8z" /></svg>,
+  <svg key="sliders" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 6h10M4 12h6M4 18h13" /><circle cx="17" cy="6" r="2" /><circle cx="13" cy="12" r="2" /><circle cx="20" cy="18" r="2" /></svg>,
 ];
 
 const safaStyles = [
@@ -91,7 +115,7 @@ export default function HomeClient() {
         <section className="content-section section-shell" id="services">
           <div className="section-heading"><div><p className="eyebrow">Made for the whole wedding party</p><h2>One polished look. Every guest ready on time.</h2></div><p>Our professional safa tying service in Rishikesh is organised around your headcount, photography and baraat departure—not a rushed one-size-fits-all appointment.</p></div>
           <div className="service-grid">
-            {services.slice(0, 4).map((service, index) => <a className="service-card" href={`/services/${service.slug}`} key={service.slug}><span>0{index + 1}</span><h3>{service.name}</h3><p>{service.intro}</p><b>Explore service →</b></a>)}
+            {services.slice(0, 4).map((service) => <a className="service-card" href={`/services/${service.slug}`} key={service.slug}><span>{serviceIcons[service.slug]}</span><h3>{service.name}</h3><p>{service.intro}</p><b>Explore service →</b></a>)}
           </div>
         </section>
 
@@ -105,9 +129,9 @@ export default function HomeClient() {
             <p>Couples searching for a <strong>safa wala in Rishikesh</strong>, a groom safa specialist or a complete baraati safa service can coordinate the fabric, colour, style, quantity and tying team in one enquiry. The service can cover the groom, fathers, brothers, close family, groomsmen and the full wedding party.</p>
           </div>
           <div className="seo-feature-grid">
-            <article><span>01</span><h3>Groom safa and wedding pagdi</h3><p>A dedicated, camera-ready groom pagdi session with optional kalgi, brooch, feather and coordinated stole details.</p></article>
-            <article><span>02</span><h3>Baraati safa rental and tying</h3><p>Matching guest safas, bulk wedding turban planning and enough trained artists to complete larger groups on time.</p></article>
-            <article><span>03</span><h3>On-site destination wedding team</h3><p>Venue-based styling at hotels, resorts, homes and wedding properties across Rishikesh and nearby hill destinations.</p></article>
+            <article><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 4c-6 0-14 4-14 12 0 2 1 4 3 4 6 0 12-6 12-12 0-1.5-.3-3-1-4z" /><path d="M4 20L14 10" /></svg></span><h3>Groom safa and wedding pagdi</h3><p>A dedicated, camera-ready groom pagdi session with optional kalgi, brooch, feather and coordinated stole details.</p></article>
+            <article><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z" /><path d="M3 13l9 5 9-5" /></svg></span><h3>Baraati safa rental and tying</h3><p>Matching guest safas, bulk wedding turban planning and enough trained artists to complete larger groups on time.</p></article>
+            <article><span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 21V9l8-6 8 6v12" /><path d="M9 21v-7h6v7" /></svg></span><h3>On-site destination wedding team</h3><p>Venue-based styling at hotels, resorts, homes and wedding properties across Rishikesh and nearby hill destinations.</p></article>
           </div>
         </section>
 
@@ -118,7 +142,7 @@ export default function HomeClient() {
 
         <section className="styles-section section-shell" aria-labelledby="styles-heading">
           <div className="section-heading"><div><p className="eyebrow">Styles, fabrics and colours</p><h2 id="styles-heading">A wedding safa collection for traditional and modern Rishikesh celebrations.</h2></div><p>Choose the direction first, then refine the fabric and colour against the groom’s sherwani, family outfits, floral palette and venue lighting.</p></div>
-          <div className="styles-grid">{safaStyles.map(([name, description], index) => <article key={name}><span className="style-number">0{index + 1}</span><div><h3>{name}</h3><p>{description}</p></div></article>)}</div>
+          <div className="styles-grid">{safaStyles.map(([name, description], index) => <article key={name}><span className="style-number">{safaStyleIcons[index]}</span><div><h3>{name}</h3><p>{description}</p></div></article>)}</div>
           <div className="fabric-note"><strong>Popular fabric and colour requests</strong><p>Silk wedding safa, premium fabric safa, embroidered pagdi, Bandhani safa, ivory groom safa, cream wedding pagdi, maroon wedding safa, red wedding turban, gold groom pagdi, blush pink and sage green guest safas.</p></div>
         </section>
 
